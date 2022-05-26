@@ -7,6 +7,9 @@ using namespace std;
 int task_1_1(int day, int month, int year, int day2, int month2, int year2) {
 	int summa = 0;
 	summa += abs(day - day2);
+
+
+
 	if (year > year2) {
 		while (year > year2) {
 			year2++;
@@ -19,36 +22,67 @@ int task_1_1(int day, int month, int year, int day2, int month2, int year2) {
 	else if (year < year2) {
 		while (year < year2) {
 			year++;
-			if (year2 % 4 == 0)
+			if (year % 4 == 0)
 				summa += 366;
 			else
 				summa += 365;
 		}
 	}
+
 	if (month > month2) {
 		while (month > month2) {
-			month2++;
-			if (month2 == 1 || 3 || 5 || 7 || 8 || 11 || 12)
-				summa += 31;
-			else if (month2 == 2 && year2 % 4 == 0)
-				summa += 29;
+			switch (month2) {
+			case 1:
+			case 3:
+			case 7:
+			case 8:
+			case 12:
+			case 10:
+			case 5:
+				summa += (31 - day) + (day - 1);
+				break;
+			case 4:
+			case 6:
+			case 11:
+			case 9:
+				summa += (30 - day) + (day - 1);
+				break;
+			default:
+				break;
+			}
+			if (month2 == 2 && year2 % 4 == 0)
+				summa += (29 - day) + (day - 1);
 			else if (month2 == 2 && year2 % 4 != 0)
-				summa += 28;
-			else
-				summa += 30;
+				summa += (28 - day) + (day - 1);
+			month2++;
 		}
 	}
 	else if (month < month2) {
 		while (month < month2) {
+			switch (month) {
+			case 1:
+			case 3:
+			case 7:
+			case 8:
+			case 12:
+			case 10:
+			case 5:
+				summa += (31 - day2) + (day2 - 1);
+				break;
+			case 4:
+			case 6:
+			case 11:
+			case 9:
+				summa += (30 - day2) + (day2 - 1);
+				break;
+			default:
+				break;
+			}
+			if (month == 2 && year2 % 4 == 0)
+				summa += (29 - day2) + (day2 - 1);
+			else if (month == 2 && year2 % 4 != 0)
+				summa += (28 - day2) + (day2 - 1);
 			month++;
-			if (month2 == 1 || 3 || 5 || 7 || 8 || 11 || 12)
-				summa += 31;
-			else if (month2 == 2 && year2 % 4 == 0)
-				summa += 29;
-			else if (month2 == 2 && year2 % 4 != 0)
-				summa += 28;
-			else
-				summa += 30;
 		}
 	}
 
